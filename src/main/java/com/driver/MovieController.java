@@ -37,36 +37,36 @@ public class MovieController {
     @GetMapping("/get-movie-by-name/{name}")
     public ResponseEntity<Movie> getMovieByName(@PathParam("movieName") String movieName){
         Movie movie=movieService.getMovieByName(movieName);
-        return new ResponseEntity<>(movie,HttpStatus.OK);
+        return new ResponseEntity<>(movie,HttpStatus.CREATED);
     }
     //5 Get director by Name
     @GetMapping("/get-director-by-name/{name}")
     public ResponseEntity<Director> getDirectorByName(@PathParam("directorName") String directorName){
         Director director=movieService.getDirectorByName(directorName);
-        return new ResponseEntity<>(director,HttpStatus.OK);
+        return new ResponseEntity<>(director,HttpStatus.CREATED);
     }
     //6 Get movies By Director
     @GetMapping("/get-movies-by-director-name/{director}")
     public ResponseEntity<List<String>> getMoviesByDirectorName(@PathParam("directorName") String directorName){
         List<String> list=movieService.getMoviesByDirectorName(directorName);
-        return new ResponseEntity<>(list,HttpStatus.OK);
+        return new ResponseEntity<>(list,HttpStatus.CREATED);
     }
     //7 Get all movies
     @GetMapping("/get-all-movies")
     public ResponseEntity<List<String>> findAllMovies(){
         List<String> list=movieService.findAllMovies();
-        return new ResponseEntity<>(list,HttpStatus.OK);
+        return new ResponseEntity<>(list,HttpStatus.CREATED);
     }
     //8 Delete Director by name
     @DeleteMapping("/delete-director-by-name")
     public ResponseEntity<String> deleteDirectorByName(@RequestParam("directorName") String directorName){
         String ans=movieService.deleteDirectorByName(directorName);
-        return new ResponseEntity<>(ans,HttpStatus.OK);
+        return new ResponseEntity<>(ans,HttpStatus.CREATED);
     }
     //9 delete all directors
     @DeleteMapping("/delete-all-directors")
     public ResponseEntity<String> deleteAllDirectors(){
         String ans=movieService.deleteAllDirectors();
-        return new ResponseEntity<>(ans,HttpStatus.OK);
+        return new ResponseEntity<>(ans,HttpStatus.CREATED);
     }
 }
