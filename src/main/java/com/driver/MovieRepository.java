@@ -2,6 +2,7 @@ package com.driver;
 
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -38,6 +39,9 @@ public class MovieRepository {
     //3 Pairing movie and director
     public String addMovieDirectorPair(String movieName,String directorName){
         List<String> list=movieDirectorPair.get(directorName);
+        if(list==null){
+            list = new ArrayList<String>();
+        }
         list.add(movieName);
         movieDirectorPair.put(directorName,list);
 
