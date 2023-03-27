@@ -35,14 +35,8 @@ public class MovieService {
     }
     //6 Get movies By Director
     public List<String> getMoviesByDirectorName(String directorName){
-        HashMap<String,String> list =movieRepository.getAllMovieDirectorPairs();
-        List<String> movies = new ArrayList<>();
-        for(Map.Entry<String,String> entry : list.entrySet()){
-            if(entry.getValue().equals(directorName)){
-                movies.add(entry.getKey());
-            }
-        }
-        return movies;
+        HashMap<String,List<String>> list =movieRepository.getAllMovieDirectorPairs();
+        return list.get(directorName);
     }
     //7 Get all movies
     public List<String> findAllMovies(){

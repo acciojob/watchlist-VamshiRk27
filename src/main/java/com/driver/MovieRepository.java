@@ -3,13 +3,14 @@ package com.driver;
 import org.springframework.stereotype.Repository;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Repository
 public class MovieRepository {
     HashMap<String,Movie> movieDb;
     HashMap<String,Director> directorDb;
-    HashMap<String,String> movieDirectorPair;
+    HashMap<String,List<String>> movieDirectorPair;
 
     public MovieRepository() {
         this.movieDb=new HashMap<>();
@@ -36,7 +37,10 @@ public class MovieRepository {
     }
     //3 Pairing movie and director
     public String addMovieDirectorPair(String movieName,String directorName){
-        movieDirectorPair.put(movieName,directorName);
+        List<String> list=movieDirectorPair.get(directorName);
+        list.add(movieName);
+        movieDirectorPair.put(directorName,list);
+
         return "Movie & Director pair added successfully";
     }
     public Movie getMovieByName(String name){
@@ -54,35 +58,21 @@ public class MovieRepository {
     public HashMap<String,Movie> getAllMovies(){
         return movieDb;
     }
-    public HashMap<String,String> getAllMovieDirectorPairs(){
+    public HashMap<String,List<String>> getAllMovieDirectorPairs(){
         return movieDirectorPair;
     }
     public String deleteDirectorByName(String name){
-        directorDb.remove(name);
-        for(Map.Entry<String,String> entry:movieDirectorPair.entrySet()) {
-            if (entry.getValue().equals(name)) {
-                String movieName = entry.getKey();
-                movieDb.remove(movieName);
-                movieDirectorPair.remove(movieName);
-            }
+        for(String movie: movieDirectorPair.get(name)){
+            movieDb.remove(movie);
         }
+        directorDb.remove(name);
         return "Director removed Successfully";
     }
     public String deleteAllDirectors() {
         for(String director:directorDb.keySet()) {
-            for(Map.Entry<String,String> entry:movieDirectorPair.entrySet()) {
-                if (entry.getValue().equals(director)) {
-                    String movieName = entry.getKey();
-                    movieDb.remove(movieName);
-                    movieDirectorPair.remove(movieName);
-                }
+            for(String movie: movieDirectorPair.get(director)){
+                movieDb.remove(movie);
             }
-//            for(String movie:movieDirectorPair.keySet()) {
-//                if(movieDirectorPair.get(movie).equals(director)) {
-//                    movieDb.remove(movie);
-//                }
-//                movieDirectorPair.remove(movie);
-//            }
             directorDb.remove(director);
         }
         return "Successfully removed Everything";
