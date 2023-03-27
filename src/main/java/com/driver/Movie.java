@@ -1,4 +1,4 @@
-package com.driver.models;
+package com.driver;
 
 import org.springframework.stereotype.Component;
 

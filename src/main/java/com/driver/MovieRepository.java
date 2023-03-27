@@ -1,7 +1,5 @@
 package com.driver;
 
-import com.driver.models.Director;
-import com.driver.models.Movie;
 import org.springframework.stereotype.Repository;
 
 import java.util.HashMap;
@@ -23,16 +21,18 @@ public class MovieRepository {
         String key=movie.getName();
         if(!movieDb.containsKey(key)){
             movieDb.put(key,movie);
+            return "Movie added Successfully";
         }
-        return "Movie added Successfully";
+        return "Movie already exists";
     }
     //2 Add Director
     public String addDirector(Director director){
         String key=director.getName();
         if(!directorDb.containsKey(key)){
             directorDb.put(key,director);
+            return "Director added Successfully";
         }
-        return "Director added Successfully";
+        return "Director already exists";
     }
     //3 Pairing movie and director
     public String addMovieDirectorPair(String movieName,String directorName){
@@ -70,14 +70,20 @@ public class MovieRepository {
     }
     public String deleteAllDirectors() {
         for(String director:directorDb.keySet()) {
-            directorDb.remove(director);
-            for(Map.Entry<String,String> entry:movieDirectorPair.entrySet()) {
-                if (entry.getValue().equals(director)) {
-                    String movieName = entry.getKey();
-                    movieDb.remove(movieName);
-                    movieDirectorPair.remove(movieName);
+//            for(Map.Entry<String,String> entry:movieDirectorPair.entrySet()) {
+//                if (entry.getValue().equals(director)) {
+//                    String movieName = entry.getKey();
+//                    movieDb.remove(movieName);
+//                    movieDirectorPair.remove(movieName);
+//                }
+//            }
+            for(String movie:movieDirectorPair.keySet()) {
+                if(movieDirectorPair.get(movie).equals(director)) {
+                    movieDirectorPair.remove(movie);
+                    movieDb.remove(movie);
                 }
             }
+            directorDb.remove(director);
         }
         return "Successfully removed Everything";
     }
