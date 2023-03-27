@@ -70,19 +70,19 @@ public class MovieRepository {
     }
     public String deleteAllDirectors() {
         for(String director:directorDb.keySet()) {
-//            for(Map.Entry<String,String> entry:movieDirectorPair.entrySet()) {
-//                if (entry.getValue().equals(director)) {
-//                    String movieName = entry.getKey();
-//                    movieDb.remove(movieName);
-//                    movieDirectorPair.remove(movieName);
-//                }
-//            }
-            for(String movie:movieDirectorPair.keySet()) {
-                if(movieDirectorPair.get(movie).equals(director)) {
-                    movieDirectorPair.remove(movie);
-                    movieDb.remove(movie);
+            for(Map.Entry<String,String> entry:movieDirectorPair.entrySet()) {
+                if (entry.getValue().equals(director)) {
+                    String movieName = entry.getKey();
+                    movieDb.remove(movieName);
+                    movieDirectorPair.remove(movieName);
                 }
             }
+//            for(String movie:movieDirectorPair.keySet()) {
+//                if(movieDirectorPair.get(movie).equals(director)) {
+//                    movieDb.remove(movie);
+//                }
+//                movieDirectorPair.remove(movie);
+//            }
             directorDb.remove(director);
         }
         return "Successfully removed Everything";
